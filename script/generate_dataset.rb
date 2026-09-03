@@ -122,14 +122,19 @@ edge(members, salaries,
      plan_tier: "clergy", survivor_option: "js100")
 yearly(salaries, "EDGE-0005", 1988, 2020, 44_250)
 
-# EDGE-0006 — unpaid leave: no salary row for 2010. Gap handling is undefined
-# behavior in prose; only the legacy run defines it.
+# EDGE-0006 — unpaid leave INSIDE the averaging window: no salary row for
+# 2018, with peak earnings straddling the gap and a phased-retirement decline
+# after it. Whether an averaging window may span the missing year is a
+# business rule nobody wrote down; only the legacy run defines it.
 edge(members, salaries,
      id: "EDGE-0006", birth_date: Date.new(1957, 6, 20), hire_date: Date.new(1992, 9, 1),
      termination_date: Date.new(2022, 6, 1), retirement_date: Date.new(2022, 6, 1),
      plan_tier: "clergy", survivor_option: "js50")
-yearly(salaries, "EDGE-0006", 1992, 2009, 37_800)
-yearly(salaries, "EDGE-0006", 2011, 2022, 37_800 * (1.03**19), raise_pct: 0.03)
+yearly(salaries, "EDGE-0006", 1992, 2014, 37_800)
+{ 2015 => 78_000, 2016 => 82_000, 2017 => 82_000,
+  2019 => 82_000, 2020 => 52_000, 2021 => 52_000, 2022 => 52_000 }.each do |y, sal|
+  salaries << ["EDGE-0006", Date.new(y, 1, 1), sal]
+end
 
 # EDGE-0007 — identical data to a normal member, but salary rows arrive
 # OUT OF ORDER in the file. Order sensitivity is a classic silent divergence.
@@ -144,14 +149,15 @@ end
 shuffled = edge_rows.shuffle(random: Random.new(7))
 salaries.concat(shuffled)
 
-# EDGE-0008 — duplicate effective date: two rows for 2015, the correction posted
-# later. Which one wins is a business rule nobody wrote down.
+# EDGE-0008 — duplicate effective date INSIDE the top averaging window: two
+# rows for 2024, the correction appearing later in the file. Which row wins
+# decides the member's whole FAS window. Nobody wrote that rule down either.
 edge(members, salaries,
      id: "EDGE-0008", birth_date: Date.new(1961, 11, 5), hire_date: Date.new(1996, 7, 1),
      termination_date: Date.new(2026, 7, 1), retirement_date: Date.new(2026, 7, 1),
      plan_tier: "clergy", survivor_option: "none")
 yearly(salaries, "EDGE-0008", 1996, 2025, 40_100)
-salaries << ["EDGE-0008", Date.new(2015, 1, 1), 71_500.00] # duplicate for 2015
+salaries << ["EDGE-0008", Date.new(2024, 1, 1), 71_500.00] # duplicate for 2024
 
 # EDGE-0009 — born February 29. Age-at-retirement arithmetic on a leap birthday.
 edge(members, salaries,

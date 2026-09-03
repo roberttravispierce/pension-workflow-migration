@@ -3,7 +3,7 @@
   "run_period": "2026-09",
   "members_in": 1013,
   "payable": 381,
-  "total_monthly_benefit": "1756957.16",
-  "input_manifest_sha256": "35854c30e3c93212519c1dc7eea88b5355e88f96cdc051a4565c6fcef7dd623c",
-  "output_sha256": "5f51ee0e252eb3b22a981b47d442e81565030c53bd31a95ee49c3a54b2d89f17"
+  "total_monthly_benefit": "1756453.89",
+  "input_manifest_sha256": "d4ca014fa5ec7ae36f2ef1f5b284aadb1d584f442e236fa7b18769fffd813c9b",
+  "output_sha256": "61f9f10454596d9907a15971af531de94f744627183e5f7bf8ad1cf5a67f8c8a"
 }
