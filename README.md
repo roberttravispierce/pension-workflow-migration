@@ -1,4 +1,4 @@
-# Pension Migration Lab
+# Pension Workflow Migration
 
 A working simulation of a legacy batch-platform migration: **Informatica-style ETL workflows →
 Temporal + Rails 8**, with the validation, documentation, and observability discipline that kind
