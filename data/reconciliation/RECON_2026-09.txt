@@ -1,0 +1,33 @@
+RECONCILIATION — BEN_PAY 2026-09
+golden: ./data/golden/BEN_PAY_2026-09.csv (sha256 61f9f1045459…)
+output: ./data/output/BEN_PAY_2026-09.csv (sha256 14af3a331714…)
+
+1. row count                 golden=381 output=381  PASS
+2. member set                PASS
+3. file checksum             FAIL
+4. column totals
+   svc_yrs      golden=      12061.63 output=      12052.30 delta=-9.33  FAIL
+   fas          golden=   45630700.86 output=   45634635.65 delta=+3934.79  FAIL
+   early_fct    golden=        351.71 output=        351.71 delta=+0.00  PASS
+   surv_fct     golden=        346.56 output=        346.56 delta=+0.00  PASS
+   mo_ben       golden=    1756453.89 output=    1755716.92 delta=-736.97  FAIL
+5. field-level diff           14 field(s) differ across 11 member(s)  FAIL
+   fas: 2 member(s)
+     EDGE-0008    golden=86504.50     output=91772.62     delta=+5268.1200
+     EDGE-0006    golden=82000.00     output=80666.67     delta=-1333.3300
+   mo_ben: 11 member(s)
+     EDGE-0013    golden=2082.57      output=1171.75      delta=-910.8200
+     EDGE-0008    golden=3708.88      output=3934.75      delta=+225.8700
+     EDGE-0006    golden=3201.84      output=3149.78      delta=-52.0600
+     MBR-00306    golden=5558.52      output=5558.53      delta=+0.0100
+     MBR-00310    golden=5402.83      output=5402.82      delta=-0.0100
+     MBR-00669    golden=8243.60      output=8243.59      delta=-0.0100
+     MBR-00720    golden=5766.96      output=5766.97      delta=+0.0100
+     MBR-00846    golden=3638.88      output=3638.89      delta=+0.0100
+     MBR-00894    golden=2741.48      output=2741.49      delta=+0.0100
+     MBR-00075    golden=3970.71      output=3970.72      delta=+0.0100
+     MBR-00139    golden=7448.12      output=7448.13      delta=+0.0100
+   svc_yrs: 1 member(s)
+     EDGE-0013    golden=21.3279      output=12.0000      delta=-9.3279
+
+RESULT: 18 discrepancies — DO NOT CUT OVER
