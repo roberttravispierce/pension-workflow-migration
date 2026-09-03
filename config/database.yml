@@ -19,14 +19,14 @@ default: &default
 
 development:
   <<: *default
-  database: pension_migration_lab_development
+  database: pension_workflow_migration_development
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
 # Do not set this db to the same as development or production.
 test:
   <<: *default
-  database: pension_migration_lab_test
+  database: pension_workflow_migration_test
 
 # As with config/credentials.yml, you never want to store sensitive information,
 # like your database password, in your source code. If your source code is
@@ -57,18 +57,18 @@ test:
 production:
   primary: &primary_production
     <<: *default
-    database: pension_migration_lab_production
-    username: pension_migration_lab
+    database: pension_workflow_migration_production
+    username: pension_workflow_migration
     password: <%= ENV["PENSION_MIGRATION_LAB_DATABASE_PASSWORD"] %>
   cache:
     <<: *primary_production
-    database: pension_migration_lab_production_cache
+    database: pension_workflow_migration_production_cache
     migrations_paths: db/cache_migrate
   queue:
     <<: *primary_production
-    database: pension_migration_lab_production_queue
+    database: pension_workflow_migration_production_queue
     migrations_paths: db/queue_migrate
   cable:
     <<: *primary_production
-    database: pension_migration_lab_production_cable
+    database: pension_workflow_migration_production_cable
     migrations_paths: db/cable_migrate
