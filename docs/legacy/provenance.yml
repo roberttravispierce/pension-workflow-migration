@@ -1,0 +1,26 @@
+# Documentation lifecycle for the legacy workflow. Reviewed-ness is data:
+# in a regulated shop, who verified what and when is part of the audit trail.
+documents:
+  WF_M_PENS_CALC_03.md:
+    source_artifact: legacy/WF_M_PENS_CALC_03.XML
+    generated_by: claude (two independent generations, diffed)
+    generated_on: 2026-09-03
+    lifecycle:
+      - step: generated
+        on: 2026-09-03
+      - step: mechanically_checked
+        on: 2026-09-03
+        tool: script/doc_check.rb
+        result: inventory claims match the repository export
+      - step: disagreements_flagged
+        on: 2026-09-03
+        flagged_sections: 1
+        detail: docs/legacy/disagreements.md
+      - step: expert_review
+        status: PENDING
+        note: >
+          Original author unavailable in this simulation. The flagged section
+          was resolved empirically via characterization (EDGE-0006 golden
+          output). In production this step is the retiring expert's sign-off,
+          routed to flagged sections only, captured here with name and date.
+    signed_off: false
