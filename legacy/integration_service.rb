@@ -30,8 +30,8 @@ RUN_PRD_END = Date.new(prd.year, prd.month, -1)
 # with NULL are false. Ruby's nil is our NULL; IIF evaluates both branches
 # (as a method call must), so the unused branch has to survive NULL inputs.
 class NilClass
-  [:+, :-, :*, :/].each { |op| define_method(op) { |_| nil } }
-  [:<, :>, :<=, :>=].each { |op| define_method(op) { |_| false } }
+  [ :+, :-, :*, :/ ].each { |op| define_method(op) { |_| nil } }
+  [ :<, :>, :<=, :>= ].each { |op| define_method(op) { |_| false } }
 end
 
 module PCFunctions
@@ -119,11 +119,11 @@ def transform_fields(mapping_name, transformation_name)
   mapping(mapping_name)
     .elements["TRANSFORMATION[@NAME='#{transformation_name}']"]
     .get_elements("TRANSFORMFIELD")
-    .map { |tf| [tf.attributes["NAME"], tf.attributes["PORTTYPE"], translate(tf.attributes["EXPRESSION"])] }
+    .map { |tf| [ tf.attributes["NAME"], tf.attributes["PORTTYPE"], translate(tf.attributes["EXPRESSION"]) ] }
 end
 
 def session_order
-  links = FOLDER.get_elements("WORKFLOW/WORKFLOWLINK").map { |l| [l.attributes["FROMTASK"], l.attributes["TOTASK"]] }
+  links = FOLDER.get_elements("WORKFLOW/WORKFLOWLINK").map { |l| [ l.attributes["FROMTASK"], l.attributes["TOTASK"] ] }
   order, cursor = [], "Start"
   while (link = links.find { |from, _| from == cursor })
     order << link[1]
@@ -153,7 +153,7 @@ def run_s_m_sal_eff_01
   adj = Hash.new { |h, k| h[k] = [] }
   read_csv("adjustments.csv").each do |r|
     next unless date(r["posted_date"]) <= RUN_PRD_END
-    adj[[r["member_id"], date(r["effective_date"]).year]] << [date(r["posted_date"]), money(r["corrected_annual_salary"])]
+    adj[[ r["member_id"], date(r["effective_date"]).year ]] << [ date(r["posted_date"]), money(r["corrected_annual_salary"]) ]
   end
 
   _, _, eff_sal_expr = transform_fields("m_SAL_EFF_01", "EXP_EFF_SAL").first
@@ -161,11 +161,11 @@ def run_s_m_sal_eff_01
   rows = {}
   read_csv("salary_history.csv").each do |r|
     yr = date(r["effective_date"]).year
-    rows[[r["member_id"], yr]] = money(r["annual_salary"])
+    rows[[ r["member_id"], yr ]] = money(r["annual_salary"])
   end
 
   rows.map do |(mbr, yr), ann_sal|
-    corr = adj[[mbr, yr]].max_by(&:first)&.last
+    corr = adj[[ mbr, yr ]].max_by(&:first)&.last
     ctx = ExprContext.new(PARAMS)
     ctx["ANN_SAL"] = ann_sal
     ctx["CORR_ANN_SAL"] = corr
@@ -206,7 +206,7 @@ def run_s_m_ben_calc_03(sal_eff, svc_vest)
   win_ports = transform_fields("m_BEN_CALC_03", "EXP_FAS_WIN")
   _, _, ben_expr = transform_fields("m_BEN_CALC_03", "EXP_BEN").first
 
-  sorted = sal_eff.sort_by { |r| [r["MBR_ID"], -r["EFF_YR"]] }
+  sorted = sal_eff.sort_by { |r| [ r["MBR_ID"], -r["EFF_YR"] ] }
 
   ctx = ExprContext.new(PARAMS)
   %w[V_YR_RNK V_WIN_SUM V_FAS_MAX V_SAL_1 V_SAL_2].each { |v| ctx[v] = 0r }
@@ -253,8 +253,8 @@ rows = results[:ben_pay].sort_by { |r| r["MBR_ID"] }
 File.open(out_file, "w") do |f|
   f.puts "member_id,svc_yrs,fas,early_fct,surv_fct,mo_ben"
   rows.each do |r|
-    f.puts [r["MBR_ID"], fmt(r["SVC_YRS"], 4), fmt(r["FAS"], 2),
-            fmt(r["EARLY_FCT"], 4), fmt(r["SURV_FCT"], 4), fmt(r["MO_BEN"], 2)].join(",")
+    f.puts [ r["MBR_ID"], fmt(r["SVC_YRS"], 4), fmt(r["FAS"], 2),
+            fmt(r["EARLY_FCT"], 4), fmt(r["SURV_FCT"], 4), fmt(r["MO_BEN"], 2) ].join(",")
   end
 end
 

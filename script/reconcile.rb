@@ -20,12 +20,12 @@ def load(path)
   lines = File.readlines(path, chomp: true)
   header = lines.shift.split(",")
   rows = lines.map { |l| header.zip(l.split(",", -1)).to_h }
-  [header, rows.to_h { |r| [r["member_id"], r] }]
+  [ header, rows.to_h { |r| [ r["member_id"], r ] } ]
 end
 
 header, golden = load(golden_path)
 _, output = load(output_path)
-fields = header - ["member_id"]
+fields = header - [ "member_id" ]
 
 report = []
 report << "RECONCILIATION — BEN_PAY #{period}"

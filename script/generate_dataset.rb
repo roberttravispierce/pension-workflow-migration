@@ -55,7 +55,7 @@ BULK_COUNT.times do |i|
   last_year = (retirement || Date.new(2026, 9, 1)).year
   (hire.year..last_year).each do |year|
     salary = (base * (1.028**(year - hire.year))).round(2)
-    salaries << [id, Date.new(year, 1, 1), salary]
+    salaries << [ id, Date.new(year, 1, 1), salary ]
   end
 
   # ~8% of retirees have a routine retroactive correction.
@@ -63,8 +63,8 @@ BULK_COUNT.times do |i|
   eff_year = retirement.year - 1 - rng.rand(3)
   original = salaries.find { |mid, d, _| mid == id && d.year == eff_year }
   next unless original
-  adjustments << [id, original[1], retirement >> rng.rand(1..6),
-                  (original[2] * 1.03).round(2), "late-reported compensation"]
+  adjustments << [ id, original[1], retirement >> rng.rand(1..6),
+                  (original[2] * 1.03).round(2), "late-reported compensation" ]
 end
 
 # --- Curated edge members ---------------------------------------------------
@@ -80,7 +80,7 @@ end
 
 def yearly(salaries, id, from_year, to_year, base, raise_pct: 0.03)
   (from_year..to_year).each do |y|
-    salaries << [id, Date.new(y, 1, 1), (base * ((1 + raise_pct)**(y - from_year))).round(2)]
+    salaries << [ id, Date.new(y, 1, 1), (base * ((1 + raise_pct)**(y - from_year))).round(2) ]
   end
 end
 
@@ -91,8 +91,8 @@ edge(members, salaries,
      termination_date: Date.new(2023, 5, 1), retirement_date: Date.new(2023, 5, 1),
      plan_tier: "clergy", survivor_option: "none")
 yearly(salaries, "EDGE-0001", 1990, 2023, 41_000)
-adjustments << ["EDGE-0001", Date.new(2021, 1, 1), Date.new(2024, 2, 10), 78_400.00,
-                "compensation restated after audit"]
+adjustments << [ "EDGE-0001", Date.new(2021, 1, 1), Date.new(2024, 2, 10), 78_400.00,
+                "compensation restated after audit" ]
 
 # EDGE-0002 — early retirement at 62: reduction applies (0.5%/month before 65).
 edge(members, salaries,
@@ -133,7 +133,7 @@ edge(members, salaries,
 yearly(salaries, "EDGE-0006", 1992, 2014, 37_800)
 { 2015 => 78_000, 2016 => 82_000, 2017 => 82_000,
   2019 => 82_000, 2020 => 52_000, 2021 => 52_000, 2022 => 52_000 }.each do |y, sal|
-  salaries << ["EDGE-0006", Date.new(y, 1, 1), sal]
+  salaries << [ "EDGE-0006", Date.new(y, 1, 1), sal ]
 end
 
 # EDGE-0007 — identical data to a normal member, but salary rows arrive
@@ -144,7 +144,7 @@ edge(members, salaries,
      plan_tier: "lay", survivor_option: "none")
 edge_rows = []
 (1994..2024).each do |y|
-  edge_rows << ["EDGE-0007", Date.new(y, 1, 1), (36_000 * (1.03**(y - 1994))).round(2)]
+  edge_rows << [ "EDGE-0007", Date.new(y, 1, 1), (36_000 * (1.03**(y - 1994))).round(2) ]
 end
 shuffled = edge_rows.shuffle(random: Random.new(7))
 salaries.concat(shuffled)
@@ -157,7 +157,7 @@ edge(members, salaries,
      termination_date: Date.new(2026, 7, 1), retirement_date: Date.new(2026, 7, 1),
      plan_tier: "clergy", survivor_option: "none")
 yearly(salaries, "EDGE-0008", 1996, 2025, 40_100)
-salaries << ["EDGE-0008", Date.new(2024, 1, 1), 71_500.00] # duplicate for 2024
+salaries << [ "EDGE-0008", Date.new(2024, 1, 1), 71_500.00 ] # duplicate for 2024
 
 # EDGE-0009 — born February 29. Age-at-retirement arithmetic on a leap birthday.
 edge(members, salaries,
@@ -173,7 +173,7 @@ edge(members, salaries,
      termination_date: Date.new(2021, 9, 1), retirement_date: Date.new(2021, 9, 1),
      plan_tier: "clergy", survivor_option: "none")
 yearly(salaries, "EDGE-0010", 1989, 2010, 33_000)
-(2011..2021).each { |y| salaries << ["EDGE-0010", Date.new(y, 1, 1), 58_000.00] }
+(2011..2021).each { |y| salaries << [ "EDGE-0010", Date.new(y, 1, 1), 58_000.00 ] }
 
 # EDGE-0011 — retires mid-month: first benefit month prorated (or not — legacy decides).
 edge(members, salaries,
@@ -200,7 +200,7 @@ edge(members, salaries,
      id: "EDGE-0012", birth_date: Date.new(1957, 10, 2), hire_date: Date.new(1990, 1, 1),
      termination_date: Date.new(2022, 1, 1), retirement_date: Date.new(2022, 1, 1),
      plan_tier: "clergy", survivor_option: "none")
-(1990..2021).each { |y| salaries << ["EDGE-0012", Date.new(y, 1, 1), 51_428.57] }
+(1990..2021).each { |y| salaries << [ "EDGE-0012", Date.new(y, 1, 1), 51_428.57 ] }
 
 # --- Write files ------------------------------------------------------------
 
@@ -215,7 +215,7 @@ end
 
 write_csv(File.join(OUT_DIR, "members.csv"),
           %w[member_id birth_date hire_date prior_termination_date rehire_date termination_date retirement_date plan_tier survivor_option],
-          members.map { |m| [m.id, m.birth_date, m.hire_date, m.prior_termination_date, m.rehire_date, m.termination_date, m.retirement_date, m.plan_tier, m.survivor_option] })
+          members.map { |m| [ m.id, m.birth_date, m.hire_date, m.prior_termination_date, m.rehire_date, m.termination_date, m.retirement_date, m.plan_tier, m.survivor_option ] })
 
 write_csv(File.join(OUT_DIR, "salary_history.csv"),
           %w[member_id effective_date annual_salary],
@@ -231,7 +231,7 @@ manifest = {
   bulk_members: BULK_COUNT,
   edge_members: members.count { |m| m.id.start_with?("EDGE-") },
   files: %w[members.csv salary_history.csv adjustments.csv].to_h do |name|
-    [name, Digest::SHA256.file(File.join(OUT_DIR, name)).hexdigest]
+    [ name, Digest::SHA256.file(File.join(OUT_DIR, name)).hexdigest ]
   end
 }
 File.write(File.join(OUT_DIR, "manifest.json"), JSON.pretty_generate(manifest) + "\n")

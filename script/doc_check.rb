@@ -21,7 +21,7 @@ actual = {
           .count { |tf| tf.attributes["EXPRESSION"] }
 }
 
-claimed = doc.scan(/^\|\s*([^|]+?)\s*\|\s*(\d+)\s*\|/).to_h { |k, v| [k, v.to_i] }
+claimed = doc.scan(/^\|\s*([^|]+?)\s*\|\s*(\d+)\s*\|/).to_h { |k, v| [ k, v.to_i ] }
 
 failures = 0
 actual.each do |claim, truth|

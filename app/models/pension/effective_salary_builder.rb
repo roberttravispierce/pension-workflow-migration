@@ -20,7 +20,7 @@ module Pension
         posted = Date.iso8601(r["posted_date"])
         next if posted > @period_end
         year = Date.iso8601(r["effective_date"]).year
-        adjustments[[r["member_id"], year]] << [posted, r["corrected_annual_salary"].to_r]
+        adjustments[[ r["member_id"], year ]] << [ posted, r["corrected_annual_salary"].to_r ]
       end
       adjustments.each do |(member_id, year), postings|
         salaries[member_id][year] = postings.max_by(&:first).last

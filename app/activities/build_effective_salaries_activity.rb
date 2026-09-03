@@ -6,7 +6,7 @@ class BuildEffectiveSalariesActivity < Temporalio::Activity::Definition
     ).call
 
     rows = salaries.flat_map do |member_id, by_year|
-      by_year.sort.map { |year, sal| [member_id, year, "%.2f" % sal] }
+      by_year.sort.map { |year, sal| [ member_id, year, "%.2f" % sal ] }
     end
     Pension::Pipeline.write_rows(
       Pension::Pipeline.effective_salaries_path(period),

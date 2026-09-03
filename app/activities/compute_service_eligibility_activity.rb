@@ -11,8 +11,8 @@ class ComputeServiceEligibilityActivity < Temporalio::Activity::Definition
     Pension::Pipeline.write_rows(
       Pension::Pipeline.payable_path(period),
       %w[member_id service_years early_factor survivor_factor accrual_rate],
-      payable.map { |r| [r.member_id, "%.4f" % r.service_years, "%.4f" % r.early_factor,
-                         "%.4f" % r.survivor_factor, "%.6f" % r.accrual_rate] }
+      payable.map { |r| [ r.member_id, "%.4f" % r.service_years, "%.4f" % r.early_factor,
+                         "%.4f" % r.survivor_factor, "%.6f" % r.accrual_rate ] }
     )
     payable.map(&:member_id)
   end

@@ -6,7 +6,7 @@ class ComputeBenefitsActivity < Temporalio::Activity::Definition
     end
 
     members = Pension::Pipeline.read_rows(Pension::Pipeline.input_dir.join("members.csv"))
-      .to_h { |m| [m["member_id"], m] }
+      .to_h { |m| [ m["member_id"], m ] }
 
     wanted = member_ids.to_set
     rows = Pension::Pipeline.read_rows(Pension::Pipeline.payable_path(period))
@@ -25,8 +25,8 @@ class ComputeBenefitsActivity < Temporalio::Activity::Definition
           salaries_by_year: salaries[r["member_id"]],
           termination_year: term_year
         )
-        [r["member_id"], r["service_years"], "%.2f" % calc.final_average_salary,
-         r["early_factor"], r["survivor_factor"], "%.2f" % calc.monthly_benefit]
+        [ r["member_id"], r["service_years"], "%.2f" % calc.final_average_salary,
+         r["early_factor"], r["survivor_factor"], "%.2f" % calc.monthly_benefit ]
       end
 
     path = Pension::Pipeline.shard_path(period, shard_index)
