@@ -2,6 +2,9 @@ class PensionCalcWorkflow < Temporalio::Workflow::Definition
   CHUNK_SIZE = 100
 
   def execute(period)
+
+    # Check completed chunk completion
+    # 
     Temporalio::Workflow.execute_activity(
       BuildEffectiveSalariesActivity, period,
       start_to_close_timeout: 120
