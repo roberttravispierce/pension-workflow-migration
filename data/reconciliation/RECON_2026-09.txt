@@ -1,6 +1,6 @@
 RECONCILIATION — BEN_PAY 2026-09
-golden: ./data/golden/BEN_PAY_2026-09.csv (sha256 61f9f1045459…)
-output: ./data/output/BEN_PAY_2026-09.csv (sha256 14af3a331714…)
+golden: data/golden/BEN_PAY_2026-09.csv (sha256 61f9f1045459…)
+output: data/output/BEN_PAY_2026-09.csv (sha256 14af3a331714…)
 
 1. row count                 golden=381 output=381  PASS
 2. member set                PASS

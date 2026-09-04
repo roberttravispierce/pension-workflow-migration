@@ -28,9 +28,10 @@ _, output = load(output_path)
 fields = header - [ "member_id" ]
 
 report = []
+rel = ->(p) { p.sub("#{ROOT}/", "") }
 report << "RECONCILIATION — BEN_PAY #{period}"
-report << "golden: #{golden_path} (sha256 #{Digest::SHA256.file(golden_path).hexdigest[0, 12]}…)"
-report << "output: #{output_path} (sha256 #{Digest::SHA256.file(output_path).hexdigest[0, 12]}…)"
+report << "golden: #{rel.call(golden_path)} (sha256 #{Digest::SHA256.file(golden_path).hexdigest[0, 12]}…)"
+report << "output: #{rel.call(output_path)} (sha256 #{Digest::SHA256.file(output_path).hexdigest[0, 12]}…)"
 report << ""
 
 failures = 0

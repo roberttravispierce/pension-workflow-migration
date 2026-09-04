@@ -47,4 +47,4 @@ ruby script/reconcile.rb 2026-09                      # the verdict
 
 ## Provenance
 
-Built AI-assisted throughout — generation guarded by mechanical checks and reconciliation, the same discipline the scenario itself argues for.
+Built AI-assisted throughout — generation guarded by mechanical checks and reconciliation, the same discipline the scenario itself argues for. All data is synthetic, produced by the seeded generator; no real member or client data exists anywhere in this repository.
