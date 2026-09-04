@@ -29,6 +29,8 @@ The full report: `data/reconciliation/RECON_2026-09.txt`. The FAS-window ambigui
 
 ## Running the whole demonstration
 
+Requires Ruby 3.4+, Docker, and the [Temporal CLI](https://docs.temporal.io/cli).
+
 ```
 temporal server start-dev            # local Temporal server, Web UI at localhost:8233
 docker run -d --name pension-lab-mysql -e MYSQL_ALLOW_EMPTY_PASSWORD=yes -p 3306:3306 mysql:8.4
