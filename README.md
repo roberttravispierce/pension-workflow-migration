@@ -4,7 +4,7 @@ A working simulation of a legacy batch-platform migration: undocumented Informat
 
 ## The scenario
 
-A pension administrator runs decades-old, undocumented ETL workflows that compute benefit payments. The original authors are nearing retirement. Converting the workflows is ordinary work; **proving the conversion reproduces a system nobody fully remembers — before the people who remember it leave — is the actual project.**
+A pension administrator runs long-lived ETL workflows that compute benefit payments. They have run correctly for years, and much of their reasoning lives in the workflow definitions rather than in written documentation. Converting the workflows is ordinary work; **proving the conversion faithfully reproduces a system that has earned that trust is the actual project.**
 
 ## The five artifacts
 
@@ -25,7 +25,7 @@ First run of the migration against the golden output: **row count matched (381 =
 3. **Gap-spanning averaging windows** — the legacy treats adjacent available years as consecutive across a missing year; the migration required calendar-consecutive years.
 4. **Rounding placement** — the legacy rounds final average salary to the cent before multiplying; the migration rounds once at the end. Eight members off by exactly one cent.
 
-The full report: `data/reconciliation/RECON_2026-09.txt`. The FAS-window ambiguity was also the one section two independent documentation generations disagreed on (`docs/legacy/disagreements.md`) — resolved empirically by the golden data, not by prose. Captured behavior answers questions after the experts are gone; documentation stops being checkable the day its reviewer leaves.
+The full report: `data/reconciliation/RECON_2026-09.txt`. The FAS-window ambiguity was also the one section two independent documentation generations disagreed on (`docs/legacy/disagreements.md`) — resolved empirically by the golden data, not by prose. Captured behavior is checkable in a way prose is not: a rule pinned by golden output cannot drift silently.
 
 ## Running the whole demonstration
 

@@ -21,6 +21,6 @@ documents:
         note: >
           Original author unavailable in this simulation. The flagged section
           was resolved empirically via characterization (EDGE-0006 golden
-          output). In production this step is the retiring expert's sign-off,
+          output). In production this step is the domain expert's sign-off,
           routed to flagged sections only, captured here with name and date.
     signed_off: false
