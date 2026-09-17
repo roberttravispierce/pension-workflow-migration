@@ -63,4 +63,4 @@ group :test do
   gem "selenium-webdriver"
 end
 
-gem "temporalio", "~> 1.7"
+gem "temporalio", "~> 1.8"
